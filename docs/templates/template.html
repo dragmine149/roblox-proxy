@@ -30,6 +30,12 @@
 	              {{endpoint-nav}}
 	          </ul>
 	        </li>
+					<li>
+	          <a href="#updates">Updates</a>
+	          <ul class="update-nav">
+	              {{update-nav}}
+	          </ul>
+	        </li>
 	      </ul>
 	    </div>
 	  </nav>
@@ -48,6 +54,13 @@
         Note: If an endpoint has multiple status codes, that means any of them could be returned. Although they will be mostly the same, there is still a small difference.
         {{endpoints}}
       </section>
+
+      <section id="updates">
+	      <h2>Updates</h2>
+	      All of the updates to this proxy will be listed here.
+				{{updates}}
+      </section>
+
     </div>
   </main>
 </body>

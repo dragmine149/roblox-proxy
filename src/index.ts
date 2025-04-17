@@ -2,7 +2,7 @@ import { generateDocumentation } from '../docs/generator';
 import { fetchResponse, handleApiRequest } from './wrappers';
 import { DataResponse } from './utils';
 import { UserRoutes } from './routes/UserRoutes';
-import { TowerRoutes } from './routes/TowerRoutes';
+import { BadgeRoutes } from './routes/BadgeRoutes';
 
 const cache = caches.default;
 
@@ -52,7 +52,7 @@ async function handleRoute(route: string, details: string[], request: Request) {
 					required: false,
 				}
 			});
-			return TowerRoutes.handle(response, request);
+			return BadgeRoutes.handle(response, request);
 		}
 
 		case '':

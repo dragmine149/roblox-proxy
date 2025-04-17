@@ -33,23 +33,27 @@ section {
 
 
 /* Endpoint navigation */
+.update-nav,
 .endpoint-nav {
-	padding-left: 15px !important;
-	margin-top: 5px !important;
+	padding-left: 15px;
+	margin-top: 5px;
 	font-size: 0.9em;
 }
 
+.update-nav li,
 .endpoint-nav li {
-	margin: 4px 0 !important;
+	margin: 4px 0;
 }
 
+.update-nav a,
 .endpoint-nav a {
-	color: var(--text-secondary) !important;
-	padding: 4px 0 !important;
+	color: var(--text-secondary);
+	padding: 4px 0;
 }
 
+.update-nav a:hover,
 .endpoint-nav a:hover {
-	color: var(--accent-color) !important;
+	color: var(--accent-color);
 }
 
 

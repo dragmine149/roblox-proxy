@@ -1,17 +1,4 @@
-export default `/* Import all CSS components */
-/* CSS Variables for theming */
-:root {
-	--bg-primary: #1a1a1a;
-	--bg-secondary: #2d2d2d;
-	--text-primary: #ffffff;
-	--text-secondary: #b3b3b3;
-	--accent-color: #61dafb;
-	--border-color: #404040;
-	--code-bg: #2d2d2d;
-	--endpoint-bg: #2d2d2d;
-	--shadow-color: rgba(0, 0, 0, 0.3);
-}
-body {
+export default `body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	line-height: 1.6;
 	margin: 0;
@@ -38,6 +25,7 @@ h2 {
 h4 {
 	margin: 0;
 }
+
 /* Code elements */
 code {
 	background: var(--code-bg);
@@ -55,6 +43,7 @@ pre {
 	padding: 15px;
 	overflow-x: auto;
 }
+
 .endpoint {
 	background: var(--endpoint-bg);
 	border: 1px solid var(--border-color);
@@ -263,6 +252,21 @@ th {
 .endpoint-toggle-button {
 	pointer-events: auto;
 }
+
+/* Import all CSS components */
+/* CSS Variables for theming */
+:root {
+	--bg-primary: #1a1a1a;
+	--bg-secondary: #2d2d2d;
+	--text-primary: #ffffff;
+	--text-secondary: #b3b3b3;
+	--accent-color: #61dafb;
+	--border-color: #404040;
+	--code-bg: #2d2d2d;
+	--endpoint-bg: #2d2d2d;
+	--shadow-color: rgba(0, 0, 0, 0.3);
+}
+
 .container {
 	/* max-width: 1200px; */
 	margin: 0 auto;
@@ -349,6 +353,7 @@ section {
 		position: absolute;
 	}
 }
+
 /* Add scroll margin to all sections to account for fixed header */
 section {
 	/* Adjust this value to match your header height */
@@ -384,23 +389,27 @@ section {
 
 
 /* Endpoint navigation */
+.update-nav,
 .endpoint-nav {
-	padding-left: 15px !important;
-	margin-top: 5px !important;
+	padding-left: 15px;
+	margin-top: 5px;
 	font-size: 0.9em;
 }
 
+.update-nav li,
 .endpoint-nav li {
-	margin: 4px 0 !important;
+	margin: 4px 0;
 }
 
+.update-nav a,
 .endpoint-nav a {
-	color: var(--text-secondary) !important;
-	padding: 4px 0 !important;
+	color: var(--text-secondary);
+	padding: 4px 0;
 }
 
+.update-nav a:hover,
 .endpoint-nav a:hover {
-	color: var(--accent-color) !important;
+	color: var(--accent-color);
 }
 
 
@@ -517,5 +526,72 @@ input:checked+.hamburger span:nth-child(3) {
 /* Optional: Hover effect */
 .menu-toggle:hover .hamburger span {
 	background-color: #888;
+}
+
+.update {
+	background: var(--endpoint-bg);
+	border: 1px solid var(--border-color);
+	margin: 20px 0;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.update h3 {
+	margin-top: 0;
+	color: #2c3e50;
+}
+
+.update-header {
+	padding: 0;
+	background: var(--bg-secondary);
+	position: relative;
+	border-bottom: 1px solid var(--border-color);
+	/* Add a minimum height to the header */
+	min-height: 50px;
+}
+
+.update-content {
+	padding: 20px;
+	display: none;
+}
+
+.update-toggle:checked~.update-content {
+	display: block;
+}
+
+.description {
+	margin: 10px 0 20px 0;
+	color: var(--text-secondary);
+}
+
+.update-toggle {
+	display: none;
+}
+
+.update-toggle-button {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
+.update-toggle:checked+.update-toggle-button {
+	height: auto;
+	padding: 15px 15px 0px 15px;
+}
+
+.update-toggle:checked+.update-toggle-button .expand-icon {
+	display: none;
+}
+
+.update-toggle:checked+.update-toggle-button .collapse-icon {
+	display: inline-block;
 }
 `;

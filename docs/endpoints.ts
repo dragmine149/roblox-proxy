@@ -156,9 +156,17 @@ export const ENDPOINTS = {
 					code: 200,
 					description: 'The user was found successfully',
 					model: {
-						id: {
+						name: {
 							type: 'string',
 							description: 'The Roblox user username'
+						},
+						display: {
+							type: 'string',
+							description: 'The Roblox user display name'
+						},
+						ui: {
+							type: 'string',
+							description: 'A format of the display name and username to use in ui. Defaults to just display name if no difference.'
 						}
 					}
 				}

@@ -12,7 +12,7 @@ export function processDate(date: string) {
 * @param user_id The id of the user
 * @returns The date/time the badge got awarded
 */
-export async function getTowerData(user_id: number, badge_id: number) {
+export async function getBadgeData(user_id: number, badge_id: number) {
 	let url = `https://badges.roblox.com/v1/users/${user_id}/badges/${badge_id}/awarded-date`;
 
 	let result = await processResponse<BadgeResponse>(url, badge_id);
@@ -33,7 +33,7 @@ export async function getTowerData(user_id: number, badge_id: number) {
 * @param badges The list of badges to get
 * @returns A streamable response of the badges upon receiving them from roblox.
 */
-export async function getAllTowerData(user_id: number, badges: number[]) {
+export async function getAllBadgeData(user_id: number, badges: number[]) {
 	let url = `https://badges.roblox.com/v1/users/${user_id}/badges/awarded-dates`;
 
 	// create new streams and stuff for streaming the data.

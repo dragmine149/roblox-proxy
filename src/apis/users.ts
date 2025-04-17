@@ -72,6 +72,8 @@ export async function getNameFromId(id: number): Promise<Response> {
 	}
 
 	return DataResponse.UserFound({
-		name: data.data.name
+		name: data.data.name,
+		display: data.data.displayName,
+		ui: `${data.data.displayName != data.data.name ? `${data.data.displayName} (@${data.data.name})` : data.data.displayName}`
 	});
 }

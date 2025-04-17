@@ -1,0 +1,18 @@
+<div class="updates" id="updates-{{update_id}}">
+	<div class="update-header">
+    <input type="checkbox" id="toggle-{{update_id}}" class="update-toggle">
+    <label for="toggle-{{update_id}}" class="update-toggle-button">
+      <span class="update">{{update_version}} - <code>{{update_date}} {{update_time}}</code></span>
+      <span class="expand-icon">&#x25BC;</span>
+      <span class="collapse-icon">&#x25B2;</span>
+    </label>
+    <div class="update-content">
+     	{{update_description}}
+      <div update="breaking">{{update_breaking}}</div>
+      <div update="added">{{update_added}}</div>
+      <div update="changed">{{update_changed}}</div>
+      <div update="fixed">{{update_fixed}}</div>
+      <div update="removed">{{update_removed}}</div>
+    </div>
+	</div>
+</div>

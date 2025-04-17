@@ -1,35 +1,57 @@
 const fs = require('fs');
 const path = require('path');
 
-// Read the content of template.html and styles.css and save them as JavaScript modules
+let docsPath = path.join(__dirname, '../docs/');
+let templatePath = path.join(docsPath, 'templates');
+let stylePath = path.join(docsPath, 'styles');
+
+function htmlMapFile(folder, file) {
+	let name = file.replace('.html', '');
+	let content = fs.readFileSync(path.join(templatePath, folder, file), 'utf8');
+
+	return `export const ${folder != '' ? `${folder}_` : ''}${name.replace(/-/g, '_')} = \`${content.replace(/\`/g, '\\`')}\`;`;
+}
+
+function cssMapFile(folder, file) {
+	// let name = file.replace('.css', '');
+	let content = fs.readFileSync(path.join(stylePath, folder, file), 'utf8');
+
+	return content.replace(/\`/g, '\\`').replace(/^@import .+$\n*/gm, '');
+}
+
 function buildDocs() {
-	const templatePath = path.join(__dirname, '../docs/templates/template.html');
-	const docsPath = path.join(__dirname, '../docs/templates');
-	const indexStylePath = path.join(__dirname, '../docs/styles/index.css');
+	// generate the html file exports
 
-	const template = fs.readFileSync(templatePath, 'utf8');
+	let html = fs.readdirSync(templatePath)
+		.map(file => {
+			if (file.endsWith('.html')) {
+				return htmlMapFile('', file);
+			}
 
-	// Find all endpoint template files
-	const endpointFiles = fs.readdirSync(docsPath)
-		.filter(file => file.startsWith('endpoint-') || file === 'endpoint.html')
-		.map(file => ({
-			name: file.replace('.html', ''),
-			content: fs.readFileSync(path.join(docsPath, file), 'utf8')
-		}));
+			// assume directory
+			return fs.readdirSync(path.join(templatePath, file), {
+				recursive: true
+			})
+				.map(subfile => htmlMapFile(file, subfile))
+				.join('\n');
+		}).join('\n');
 
-	// Read index.css and find imports
-	const indexCss = fs.readFileSync(indexStylePath, 'utf8');
-	const importLines = indexCss.match(/^@import ['"](.+)['"];?$/gm) || [];
-	const importPaths = importLines.map(line => {
-		const match = line.match(/^@import ['"](.+)['"];?$/);
-		return path.join(path.dirname(indexStylePath), match[1]);
-	});
+	// generate the css file exports
+	let css = fs.readdirSync(stylePath)
+		.map(file => {
+			if (file.endsWith('.css')) {
+				return cssMapFile('', file);
+			}
 
-	// Build final CSS by combining index.css with imported files
-	let styles = indexCss.replace(/^@import .+$\n*/gm, '');
-	for (const importPath of importPaths) {
-		styles += fs.readFileSync(importPath, 'utf8');
-	}
+			// assume directory
+			return fs.readdirSync(path.join(stylePath, file), {
+				recursive: true
+			})
+				.map(subfile => cssMapFile(file, subfile))
+				.join('\n');
+		}).join('\n');
+
+	css = `export default \`${css}\`;\n`;
 
 	// Create generated folder if it doesn't exist
 	const generatedPath = path.join(__dirname, '../docs/generated');
@@ -37,26 +59,10 @@ function buildDocs() {
 		fs.mkdirSync(generatedPath);
 	}
 
-	// Write template.ts
-	fs.writeFileSync(
-		path.join(generatedPath, 'template.ts'),
-		`export default \`${template.replace(/\`/g, '\\`')}\`;`
-	);
+	// save the files
+	fs.writeFileSync(path.join(generatedPath, 'styles.ts'), css);
+	fs.writeFileSync(path.join(generatedPath, 'html.ts'), html);
 
-	// Write endpoints.ts with all endpoint templates
-	const endpointExports = endpointFiles
-		.map(file => `export const ${file.name.replace(/-/g, '_')} = \`${file.content.replace(/\`/g, '\\`')}\`;`)
-		.join('\n');
-	fs.writeFileSync(
-		path.join(generatedPath, 'endpoints.ts'),
-		endpointExports
-	);
-
-	// Write styles.ts
-	fs.writeFileSync(
-		path.join(generatedPath, 'styles.ts'),
-		`export default \`${styles.replace(/\`/g, '\\`')}\`;`
-	);
 }
 
 buildDocs();

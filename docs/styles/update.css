@@ -1,0 +1,66 @@
+.update {
+	background: var(--endpoint-bg);
+	border: 1px solid var(--border-color);
+	margin: 20px 0;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.update h3 {
+	margin-top: 0;
+	color: #2c3e50;
+}
+
+.update-header {
+	padding: 0;
+	background: var(--bg-secondary);
+	position: relative;
+	border-bottom: 1px solid var(--border-color);
+	/* Add a minimum height to the header */
+	min-height: 50px;
+}
+
+.update-content {
+	padding: 20px;
+	display: none;
+}
+
+.update-toggle:checked~.update-content {
+	display: block;
+}
+
+.description {
+	margin: 10px 0 20px 0;
+	color: var(--text-secondary);
+}
+
+.update-toggle {
+	display: none;
+}
+
+.update-toggle-button {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
+.update-toggle:checked+.update-toggle-button {
+	height: auto;
+	padding: 15px 15px 0px 15px;
+}
+
+.update-toggle:checked+.update-toggle-button .expand-icon {
+	display: none;
+}
+
+.update-toggle:checked+.update-toggle-button .collapse-icon {
+	display: inline-block;
+}

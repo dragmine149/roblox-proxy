@@ -1,7 +1,7 @@
 import { DataResponse } from '../utils';
-import { getTowerData, getAllTowerData, compareBadges } from '../apis/badges';
+import { getBadgeData, getAllBadgeData, compareBadges } from '../apis/badges';
 
-export class TowerRoutes {
+export class BadgeRoutes {
 	static async handle(response: BindingsResponse, request: Request) {
 		const { user_id, option, badge_1, badge_2 } = response;
 
@@ -12,9 +12,9 @@ export class TowerRoutes {
 				return compareBadges(user_id, badge_1, badge_2);
 			case 'all':
 				const badges: { badgeids: number[] } = await request.json();
-				return getAllTowerData(user_id, badges.badgeids);
+				return getAllBadgeData(user_id, badges.badgeids);
 			case 'badge':
-				return getTowerData(user_id, badge_1);
+				return getBadgeData(user_id, badge_1);
 			default:
 				return DataResponse.APIDoesntExist();
 		}
