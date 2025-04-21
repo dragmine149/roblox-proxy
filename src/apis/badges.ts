@@ -82,6 +82,7 @@ export async function getAllBadgeData(user_id: number, badges: number[]) {
 			let badge_search = chunk.map(badge => badge.toString()).join(',');
 
 			// send the request to the server
+			console.log(`Fetching badges ${badge_search}`);
 			let response = await tryCatch(fetch(fetchRequest(`${url}?badgeIds=${badge_search}`, {
 				headers: {
 					'Content-Type': 'application/json'

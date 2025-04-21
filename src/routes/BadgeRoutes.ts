@@ -1,4 +1,4 @@
-import { DataResponse } from '../utils';
+import { DataResponse, tryCatch } from '../utils';
 import { getBadgeData, getAllBadgeData, compareBadges } from '../apis/badges';
 
 export class BadgeRoutes {
@@ -11,7 +11,15 @@ export class BadgeRoutes {
 			case 'earliest':
 				return compareBadges(user_id, badge_1, badge_2);
 			case 'all':
-				const badges: { badgeids: number[] } = await request.json();
+				let jsonBadges = await tryCatch<{ badgeids: number[] }>(request.json());
+				if (jsonBadges.error) {
+					return DataResponse.ParseJsonFailed("Failed to parse request body. Did any body get sent?");
+				}
+				let badges = jsonBadges.data;
+				if (!badges.badgeids) {
+					return DataResponse.ParseJsonFailed("No badge IDs provided.");
+				}
+
 				return getAllBadgeData(user_id, badges.badgeids);
 			case 'badge':
 				return getBadgeData(user_id, badge_1);

@@ -290,6 +290,20 @@ export const ENDPOINTS = {
 							description: 'The error message returned during the stream, and the information. DO NOTE: This won\'t cause the stream to end and more successfully data can follow.'
 						}
 					}
+				},
+				{
+					code: 500,
+					description: 'An error occurred trying to translate the body that got sent in the request.',
+					model: {
+						error: {
+							type: 'string',
+							description: 'The error message'
+						},
+						error_details: {
+							type: 'any[]',
+							description: 'More information about the error in question.'
+						}
+					}
 				}
 			]
 		},

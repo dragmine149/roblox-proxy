@@ -108,11 +108,13 @@ export const UPDATES = {
 		description: 'Bug fixing',
 		breakingChanges: [],
 		added: [],
-		changed: [],
+		changed: [
+			'Removed caching from streamed responses.'
+		],
 		fixed: [
-			'Fixed an issue where `/badges/{id}/all` would result in a 500 with missing cors due to a failed attempt at internal cache storage.'
+			'Fixed an issue where everything would break if an invalid body got sent to `/badges/{id}/all`'
 		],
 		removed: [],
-		date: new Date(1745247480000)
+		date: new Date(1745250300000)
 	},
 }
