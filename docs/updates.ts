@@ -103,5 +103,16 @@ export const UPDATES = {
 			'Last of internal references to EToH'
 		],
 		date: new Date(1744915081000)
-	}
+	},
+	v0_3_2: {
+		description: 'Bug fixing',
+		breakingChanges: [],
+		added: [],
+		changed: [],
+		fixed: [
+			'Fixed an issue where `/badges/{id}/all` would result in a 500 with missing cors due to a failed attempt at internal cache storage.'
+		],
+		removed: [],
+		date: new Date(1745247480000)
+	},
 }

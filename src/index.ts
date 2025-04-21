@@ -150,6 +150,11 @@ export default {
 		}
 
 		let clone = response.clone();
+		if (clone.status == 202) {
+			console.log(`Request ${request.url} is a stream. Not caching.`);
+			return response;
+		}
+
 		let clone_json: ResponseType = await clone.json();
 		if (clone_json.error) {
 			console.log(`Request ${request.url} errored. Not storing in cache`);
