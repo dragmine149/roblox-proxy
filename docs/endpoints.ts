@@ -40,8 +40,83 @@ export const ENDPOINTS = {
 	"users": [
 		{
 			method: 'GET',
+			path: '/users/{user}',
+			description: 'Get information about a user from their id or name',
+			parameters: [
+				{
+					name: 'user',
+					type: 'string | number',
+					required: true,
+					description: 'The username of the user, or the userid of the user. Will also work with past usernames.'
+				}
+			],
+			responses: [
+				{
+					code: 404,
+					description: 'User could not be found or no user was provided.',
+					model: {
+						error: {
+							type: 'string',
+							description: 'The error message'
+						}
+					}
+				},
+				{
+					code: 400,
+					description: 'Fetch failed. Roblox is either ratelimiting us or is currently down.',
+					model: {
+						error: {
+							type: 'string',
+							description: 'The error message'
+						},
+						error_details: {
+							type: 'any[]',
+							description: 'More information about the error in question.'
+						}
+					}
+				},
+				{
+					code: 500,
+					description: 'Json retrieved from roblox failed to parse. This could be a server side issue not handing an edge case, or a roblox issue in how their data is returned.',
+					model: {
+						error: {
+							type: 'string',
+							description: 'The error message'
+						},
+						error_details: {
+							type: 'any[]',
+							description: 'More information about the error in question.'
+						}
+					}
+				},
+				{
+					code: 200,
+					description: 'The user was found successfully. Most up to date user information returned',
+					model: {
+						id: {
+							type: 'number',
+							description: 'The Roblox user ID'
+						},
+						name: {
+							type: 'string',
+							description: 'The Roblox username'
+						},
+						display: {
+							type: 'string',
+							description: 'The Roblox user display name. Defaults to the username if no display name is found'
+						}
+					}
+				}
+			]
+		},
+		{
+			method: 'GET',
 			path: '/users/{username}/id',
 			description: 'Get user ID from username',
+			deprecated: {
+				version: '0.3.3',
+				use: '/users/{user}'
+			},
 			parameters: [
 				{
 					name: 'username',
@@ -103,6 +178,10 @@ export const ENDPOINTS = {
 		},
 		{
 			method: 'GET',
+			deprecated: {
+				version: '0.3.3',
+				use: '/users/{user}'
+			},
 			path: '/users/{userid}/name',
 			description: 'Get user name from user ID',
 			parameters: [

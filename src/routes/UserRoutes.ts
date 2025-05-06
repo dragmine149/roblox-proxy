@@ -1,5 +1,5 @@
 import { DataResponse } from '../utils';
-import { getNameFromId, getIdFromName } from '../apis/users';
+import { fromId, fromName } from '../apis/users';
 
 export class UserRoutes {
 	static async handle(response: BindingsResponse) {
@@ -12,14 +12,20 @@ export class UserRoutes {
 		switch (option) {
 			case 'name':
 				console.log(`Getting user name from ${user_id}`);
-				return getNameFromId(user_id);
+				return fromId(user_id);
 
-			case '':
 			case 'id':
 				console.log(`Getting user id from ${username}`);
-				return getIdFromName(username);
+				return fromName(username);
 
+			case '':
 			default:
+				if (user_id) {
+					return fromId(user_id)
+				}
+				if (username) {
+					return fromName(username)
+				}
 				return DataResponse.APIDoesntExist();
 		}
 	}

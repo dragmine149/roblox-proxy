@@ -15,3 +15,8 @@ pre {
 	padding: 15px;
 	overflow-x: auto;
 }
+
+.deprecated code {
+	background-color: darkred;
+	color: white;
+}

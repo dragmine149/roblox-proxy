@@ -6,7 +6,7 @@ import { fetchRequest } from "../wrappers";
 * @param name The roblox USERNAME (not display name) of the user to get
 * @returns The ID of the user
 */
-export async function getIdFromName(name: string): Promise<Response> {
+export async function fromName(name: string): Promise<Response> {
 	// if we have no name, then return as there is no reason for us to do anything.
 	if (!name) {
 		return DataResponse.UserNotFoundName(name);
@@ -41,14 +41,16 @@ export async function getIdFromName(name: string): Promise<Response> {
 	// just make sure we have data
 	if (rbx_data?.length > 0) {
 		return DataResponse.UserFound({
-			id: rbx_data[0].id
+			id: rbx_data[0].id,
+			name: rbx_data[0].name,
+			display: rbx_data[0].displayName,
 		});
 	}
 
 	return DataResponse.UserNotFoundName(name);
 }
 
-export async function getNameFromId(id: number): Promise<Response> {
+export async function fromId(id: number): Promise<Response> {
 	if (!id) {
 		return DataResponse.UserNotFoundId(id);
 	}
@@ -72,8 +74,8 @@ export async function getNameFromId(id: number): Promise<Response> {
 	}
 
 	return DataResponse.UserFound({
+		id: data.data.id,
 		name: data.data.name,
 		display: data.data.displayName,
-		ui: `${data.data.displayName != data.data.name ? `${data.data.displayName} (@${data.data.name})` : data.data.displayName}`
 	});
 }

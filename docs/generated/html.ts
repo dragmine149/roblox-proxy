@@ -1,3 +1,8 @@
+export const endpoints_endpoint_deprecated = `<div class="deprecated">
+	<bold>Deprecated</bold> as of <code>v{{deprecated_version}}</code><br>
+	Use <code>{{deprecated_use}}</code> instead
+</div>
+`;
 export const endpoints_endpoint_parameter = `<tr>
   <td><p>{{name}}{{required}}</p>
   	<code style="color: gray">{{type}}</code>
@@ -45,6 +50,7 @@ export const endpoints_endpoint = `<div class="endpoint" id="{{id}}">
         <code class="path">{{path}}</code>
         <p class="description">{{description}}</p>
       </div>
+      {{deprecated}}
       <span class="expand-icon">&#x25BC;</span>
       <span class="collapse-icon">&#x25B2;</span>
     </label>
@@ -134,7 +140,11 @@ export const template = `<!DOCTYPE html>
 
       <section id="endpoints">
         <h2>Endpoints</h2>
-        Note: If an endpoint has multiple status codes, that means any of them could be returned. Although they will be mostly the same, there is still a small difference.
+        Information:
+        <ul>
+        	<li>Endpoints with multiple status codes could mean any of those is returned. The format should be the same in most cases but can be slightly different.</li>
+         	<li>Endpoints that are formatted like <code>{A|B}</code> means that it could be A or B for that parameter. This is only really used upon merging of two old endpoints and will rarley be used.</li>
+        </ul>
         {{endpoints}}
       </section>
 
@@ -151,7 +161,7 @@ export const template = `<!DOCTYPE html>
 `;
 export const updates_update = `<div class="updates" id="updates-{{update_id}}">
 	<div class="update-header">
-    <input type="checkbox" id="toggle-{{update_id}}" class="update-toggle">
+    <input type="checkbox" id="toggle-{{update_id}}" class="update-toggle" autocomplete="off">
     <label for="toggle-{{update_id}}" class="update-toggle-button">
       <span class="update">{{update_version}} - <code>{{update_date}} {{update_time}}</code></span>
       <span class="expand-icon">&#x25BC;</span>

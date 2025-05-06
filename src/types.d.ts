@@ -61,6 +61,10 @@ type Endpoint = {
 	method: string;
 	path: string;
 	description: string;
+	deprecated: {
+		version: string;
+		use: string;
+	}?;
 	parameters: {
 		name: string;
 		type: string;

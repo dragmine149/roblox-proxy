@@ -27,6 +27,13 @@ function generateEndpointCategories() {
 function generateEndpointHTML(endpoint_docs: Endpoint) {
 	const id = `endpoint-${endpoint_docs.method.toLowerCase()}-${endpoint_docs.path.replace(/[^a-zA-Z0-9]/g, '-')}`;
 
+	let deprecated = '';
+	if (endpoint_docs.deprecated) {
+		deprecated = html.endpoints_endpoint_deprecated
+			.replace(/{{deprecated_version}}/g, endpoint_docs.deprecated.version)
+			.replace(/{{deprecated_use}}/g, endpoint_docs.deprecated.use);
+	}
+
 	let parameters = endpoint_docs.parameters.map(param => html.endpoints_endpoint_parameter
 		.replace(/{{name}}/g, param.name)
 		.replace(/{{type}}/g, param.type)
@@ -54,6 +61,7 @@ function generateEndpointHTML(endpoint_docs: Endpoint) {
 		.replace(/{{method_l}}/g, endpoint_docs.method.toLowerCase())
 		.replace(/{{path}}/g, endpoint_docs.path)
 		.replace(/{{description}}/g, endpoint_docs.description)
+		.replace(/{{deprecated}}/g, deprecated)
 		.replace(/{{parameters}}/g, parameters)
 		.replace(/{{responses}}/g, responses);
 }
@@ -61,7 +69,20 @@ function generateEndpointHTML(endpoint_docs: Endpoint) {
 function mapUpdateArray(title: string, information: string[]) {
 	if (!information.length) return '';
 
-	return `<h3>${title}</h3><ul>${information.map(info => `<li>${info}</li>`).join('\n')}</ul>`
+	return `<h3>${title}</h3><ul>${information.map(info => {
+		let newString = '';
+		let currentString = info;
+		while (newString != currentString) {
+			newString = currentString;
+			console.log(`1`, currentString);
+			currentString = currentString.replace(/`/, '<code>');
+			console.log(`2`, currentString);
+			currentString = currentString.replace(/`/, '</code>');
+			console.log(`3`, currentString);
+		}
+
+		return `<li>${newString}</li>`
+	}).join('\n')}</ul>`
 }
 
 function generateUpdateHTML() {

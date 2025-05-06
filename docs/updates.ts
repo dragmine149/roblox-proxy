@@ -117,4 +117,23 @@ export const UPDATES = {
 		removed: [],
 		date: new Date(1745250300000)
 	},
+	v0_3_3: {
+		description: 'User data and documentation improvements',
+		breakingChanges: [],
+		added: [
+			'DOCUMENTATION: deprecated tag to documentation elements'
+		],
+		changed: [
+			'ENDPOINT: `/users/{username}/id` has now been deprecated. Use `/users/{user}` instead. Will be removed in v0.4.0',
+			'ENDPOINT: `/users/{userid}/name` has now been deprecated. Use `/users/{user}` instead. Will be removed in v0.4.0',
+			'ENDPOINT: `/users/{user}` now returns `{id, username, display_name}` instead of partial information to do with those fields (part of the reason for the merge)',
+			'DOCUMENTATION: Updated log will now always be collapsed upon refresh',
+			'DOCUMENTATION: Endpoint tables now have a thicker border and take up more of the space'
+		],
+		fixed: [
+			'DOCUMENTATION: Update log now formats inline codeblocks correctly'
+		],
+		removed: [],
+		date: new Date(1746534493000)
+	},
 }

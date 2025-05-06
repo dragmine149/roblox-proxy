@@ -84,3 +84,7 @@ section {
 		position: absolute;
 	}
 }
+
+bold {
+	font-weight: bold;
+}

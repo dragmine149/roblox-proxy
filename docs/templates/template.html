@@ -51,7 +51,11 @@
 
       <section id="endpoints">
         <h2>Endpoints</h2>
-        Note: If an endpoint has multiple status codes, that means any of them could be returned. Although they will be mostly the same, there is still a small difference.
+        Information:
+        <ul>
+        	<li>Endpoints with multiple status codes could mean any of those is returned. The format should be the same in most cases but can be slightly different.</li>
+         	<li>Endpoints that are formatted like <code>{A|B}</code> means that it could be A or B for that parameter. This is only really used upon merging of two old endpoints and will rarley be used.</li>
+        </ul>
         {{endpoints}}
       </section>
 

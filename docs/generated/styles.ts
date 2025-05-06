@@ -44,6 +44,11 @@ pre {
 	overflow-x: auto;
 }
 
+.deprecated code {
+	background-color: darkred;
+	color: white;
+}
+
 .endpoint {
 	background: var(--endpoint-bg);
 	border: 1px solid var(--border-color);
@@ -147,7 +152,7 @@ pre {
 }
 
 table {
-	/* width: 100%; */
+	width: 100%;
 	border-collapse: collapse;
 	margin: 10px 0;
 }
@@ -156,17 +161,21 @@ th,
 td {
 	padding: 0 10px;
 	text-align: left;
-	/* border: 1px solid var(--border-color); */
 }
 
 th {
 	background: var(--bg-secondary);
 	font-weight: 600;
+	border: 6px solid var(--border-color);
+}
+
+.parameters>table {
+	border: 6px solid var(--border-color);
 }
 
 .response {
 	margin: 10px 0;
-	border: 1px solid var(--border-color);
+	border: 6px solid var(--border-color);
 	border-radius: 4px;
 }
 
@@ -251,6 +260,13 @@ th {
 
 .endpoint-toggle-button {
 	pointer-events: auto;
+}
+
+
+.deprecated {
+	border-radius: 5px;
+	background-color: #ff4500aa;
+	padding: 3px;
 }
 
 /* Import all CSS components */
@@ -352,6 +368,10 @@ section {
 	.theme-toggle {
 		position: absolute;
 	}
+}
+
+bold {
+	font-weight: bold;
 }
 
 /* Add scroll margin to all sections to account for fixed header */
