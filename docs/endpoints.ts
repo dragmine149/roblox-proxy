@@ -479,6 +479,69 @@ export const ENDPOINTS = {
 					}
 				}
 			]
+		},
+		{
+			method: 'GET',
+			path: '/badges/{badgeid}/icon',
+			description: 'Get the icon URL for a badge',
+			parameters: [
+				{
+					name: 'badgeid',
+					type: 'number',
+					required: true,
+					description: 'The badge id to get the asset for.'
+				}
+			],
+			responses: [
+				{
+					code: 400,
+					description: 'Fetch failed. Roblox is either ratelimiting us or is currently down.',
+					model: {
+						error: {
+							type: 'string',
+							description: 'The error message'
+						},
+						error_details: {
+							type: 'any[]',
+							description: 'More information about the error in question.'
+						}
+					}
+				},
+				{
+					code: 500,
+					description: 'Json retrieved from roblox failed to parse. This could be a server side issue not handing an edge case, or a roblox issue in how their data is returned.',
+					model: {
+						error: {
+							type: 'string',
+							description: 'The error message'
+						},
+						error_details: {
+							type: 'any[]',
+							description: 'More information about the error in question.'
+						}
+					}
+				},
+				{
+					code: 200,
+					description: 'Badge data has been retrieved from roblox',
+					model: {
+						error: {
+							type: 'string',
+							description: 'The user does not have the badge. We do not know if the badge exists or not.'
+						}
+					}
+				},
+				{
+					code: 200,
+					description: 'Badge data has been retrieved from roblox',
+					model: {
+						url: {
+							type: 'string',
+							description: 'The id of the badge icon.'
+						}
+					}
+				}
+			]
 		}
 	],
 };

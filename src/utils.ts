@@ -13,7 +13,7 @@ export async function tryCatch<T, E = Error>(
 }
 
 
-export async function processResponse<T>(url: string, user_id: number) {
+export async function processResponse<T>(url: string, user_id: number | undefined, badge_id: number | undefined) {
 	console.log("Processing response for URL:", url);
 
 	let response = await tryCatch(fetch(fetchRequest(url)));
@@ -23,7 +23,12 @@ export async function processResponse<T>(url: string, user_id: number) {
 	}
 
 	if (response.data.status == 204) {
-		return DataResponse.UserNoHasBadge(user_id);
+		if (user_id) {
+			return DataResponse.UserNoHasBadge(user_id);
+		}
+		if (badge_id) {
+			return DataResponse.BadgeNotFound(badge_id);
+		}
 	}
 
 	console.log("Processing badge data to requested format");
@@ -50,7 +55,8 @@ enum DataResponses {
 	ParseJsonFailed = 500,
 	URLParseFailed = 500,
 	APIDoesntExist = 501,
-	Unknown = 500
+	Unknown = 500,
+	BadgeHasIcon = 200,
 }
 
 export class DataResponse {
@@ -136,5 +142,18 @@ export class DataResponse {
 			error: `Unknown error occurred. Please try again later and make an issue on github if the issue persists.`,
 			error_details: message
 		}, DataResponses.Unknown);
+	}
+
+	static BadgeHasIcon(url: string): Response {
+		return this.__makeResponse({
+			url: url
+		}, DataResponses.BadgeHasIcon);
+	}
+
+	static AssetNotFound(asset_id: number, asset_url: string): Response {
+		return this.__makeResponse({
+			error: `Asset with id (${asset_id}) does not exist or we don't have permission to edit it`,
+			error_asset_url: asset_url
+		}, DataResponses.BadgeNotFound);
 	}
 }

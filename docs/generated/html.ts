@@ -98,7 +98,13 @@ export const template = `<!DOCTYPE html>
   </style>
 </head>
 <body class="dark-theme">
-  <h1 class="header-row">Roblox Proxy API Documentation</h1>
+  <h1 class="header-row">Roblox Proxy API Documentation
+  </h1>
+  <div class="github">
+		<a href="https://github.com/dragmine149/roblox-proxy" title="The github repo">
+			<img src="https://img.icons8.com/?size=100&id=106564&format=png&color=000000">
+		</a>
+  </div>
 	<label class="menu-toggle">
     <input type="checkbox">
     <div class="hamburger-container">

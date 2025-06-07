@@ -136,4 +136,16 @@ export const UPDATES = {
 		removed: [],
 		date: new Date(1746534493000)
 	},
+	v0_3_4: {
+		description: 'New endpoint and some documentation updates',
+		breakingChanges: [],
+		added: [
+			'ENDPOINT: `/badges/icon/{badge_id}` to get the icon id for a specific badge',
+			'DOCUMENTATION: Github icon top right for quick link to github.'
+		],
+		changed: [],
+		fixed: [],
+		removed: [],
+		date: new Date(1749310622000)
+	}
 }

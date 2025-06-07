@@ -130,7 +130,7 @@ export async function getAllBadgeData(user_id: number, badges: number[]) {
 
 export async function compareBadges(user_id: number, badge_1: number, badge_2: number) {
 	let url = `https://badges.roblox.com/v1/users/${user_id}/badges/awarded-dates?badgeIds=${badge_1},${badge_2}`;
-	let result = await processResponse<RobloxBadgeResponse>(url, user_id);
+	let result = await processResponse<BadgeResponseResponse>(url, user_id);
 	if (result instanceof Response) {
 		return result;
 	}
@@ -164,4 +164,26 @@ export async function compareBadges(user_id: number, badge_1: number, badge_2: n
 
 	return_data.earliest = earliest.badgeId;
 	return DataResponse.UserHasBadge(return_data);
+}
+
+export async function getBadgeIcon(badge_id: number) {
+	let url = `https://badges.roblox.com/v1/badges/${badge_id}`;
+	let result = await processResponse<RobloxBadge>(url, undefined, badge_id);
+	if (result instanceof Response) {
+		return result;
+	}
+
+	let iconURL = `https://assetdelivery.roblox.com/v2/assetId/${result.displayIconImageId}`;
+	// let assetResult = await processResponse<RobloxAssetID>(iconURL, undefined, badge_id);
+	// if (assetResult instanceof Response) {
+	// 	return assetResult;
+	// }
+
+	// console.log(assetResult);
+	// if (assetResult.errors || assetResult.locations === null) {
+	// 	return DataResponse.AssetNotFound(result.displayIconImageId, iconURL);
+	// }
+
+	// return DataResponse.BadgeHasIcon(assetResult.locations[0].location);
+	return DataResponse.BadgeHasIcon(`${result.displayIconImageId}`);
 }

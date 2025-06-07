@@ -35,15 +35,67 @@ type RobloxUserIDResponse = {
 	data: RobloxUserID[];
 }
 
+type RobloxBadge = {
+	id: number;
+	name: string;
+	description: string;
+	displayName: string;
+	displayDescription: string;
+	enabled: boolean;
+	iconImageId: number;
+	displayIconImageId: number;
+	created: string;
+	updated: string;
+	statistics: {
+		pastDayAwardedCount: number;
+		awardedCount: number;
+		winRatePercentage: number;
+	};
+	awardingUniverse: {
+		id: number;
+		name: string;
+		rootPlaceId: number;
+	}
+}
+
 type BadgeResponse = {
 	badgeId: number;
 	awardedDate?: string;
 	date: number;
 }
 
-type RobloxBadgeResponse = {
+type BadgeResponseResponse = {
 	data: BadgeResponse[];
 }
+
+
+type RobloxAssetID = {
+	locations: {
+		assetFormat: string;
+		location: string;
+		assetMetadatas: {
+			metadataType: number;
+			value: string;
+		}[]?
+	}[]?;
+	errors: {
+		code: number;
+		message: string;
+		customErrorCode: number?;
+	}?;
+	requestId: string;
+	isHashDynamic: boolean;
+	isCopyrightProtected: boolean;
+	isArchived: boolean;
+	assetTypeId: number;
+	isRecordable: boolean;
+	contentRepresentationSpecifier: {
+		format: string;
+		majorVersion: string;
+		fidelity: string;
+	}?;
+}
+
 
 type Success<T> = {
 	data: T;

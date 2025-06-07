@@ -34,12 +34,17 @@ async function handleRoute(route: string, details: string[], request: Request) {
 				user_id: {
 					type: 'number',
 					position: 0,
-					required: true,
+					required: false,
+				},
+				badge_id: {
+					type: 'number',
+					position: 0,
+					required: false,
 				},
 				option: {
 					type: 'string',
 					position: 1,
-					required: true,
+					required: false,
 				},
 				badge_1: {
 					type: 'number',
