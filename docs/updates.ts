@@ -169,4 +169,15 @@ export const UPDATES = {
 		],
 		date: new Date(1758119393000)
 	},
+	v0_4_1: {
+		description: 'Fix a "change" i did causing stuff to break',
+		breakingChanges: [],
+		added: [],
+		changed: [],
+		fixed: [
+			'ENDPOINT: `/badges/{userid}/badge/{badgeid}` returning a failed case as it was using the user_id as the badge_id.'
+		],
+		removed: [],
+		date: new Date(1758121272000)
+	}
 }

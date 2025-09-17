@@ -27,7 +27,8 @@ export class BadgeRoutes {
 
 				return getAllBadgeData(user_id, badges.badgeids);
 			case 'badge':
-				return getBadgeData(user_id, badge_id);
+				// badge_id is the same as user_id for when user_id doesn't exist. Hence we use badge_1.
+				return getBadgeData(user_id, badge_1 as number);
 			default:
 				return DataResponse.APIDoesntExist();
 		}
