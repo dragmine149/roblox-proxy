@@ -13,7 +13,7 @@ export async function tryCatch<T, E = Error>(
 }
 
 
-export async function processResponse<T>(url: string, user_id: number | undefined, badge_id: number | undefined) {
+export async function processResponse<T>(url: string, user_id?: number, badge_id?: number) {
 	console.log("Processing response for URL:", url);
 
 	let response = await tryCatch(fetch(fetchRequest(url)));
@@ -57,6 +57,8 @@ enum DataResponses {
 	APIDoesntExist = 501,
 	Unknown = 500,
 	BadgeHasIcon = 200,
+	ThumbnailFailed = 400,
+	ThumbnailSucceed = 200,
 }
 
 export class DataResponse {
@@ -125,6 +127,14 @@ export class DataResponse {
 	}
 
 	static APIDoesntExist(): Response {
+		const randomNumber = Math.random();
+		if (randomNumber < 0.005) {
+			return this.__makeResponse({
+				message: `For those who spam the API endpoint with useless data, i thank you. And well done for running into this message.`,
+				source_code: 'https://github.com/dragmine149/roblox-proxy'
+			}, 200);
+		}
+
 		return this.__makeResponse({
 			error: `API does not exist.`,
 		}, DataResponses.APIDoesntExist);
@@ -155,5 +165,24 @@ export class DataResponse {
 			error: `Asset with id (${asset_id}) does not exist or we don't have permission to edit it`,
 			error_asset_url: asset_url
 		}, DataResponses.BadgeNotFound);
+	}
+
+	static ThumbnailFailed(user_id: number, error_msg: string, field?: string): Response {
+		return this.__makeResponse({
+			user_id,
+			error: error_msg,
+			field
+		}, DataResponses.ThumbnailFailed);
+	}
+
+	static ThumbnailSucceed(user_id: number, url: string): Response {
+		return this.__makeResponse({
+			user_id,
+			image_url: url
+		}, DataResponses.ThumbnailSucceed);
+	}
+
+	static ThumbnailDirect(url: string): Response {
+		return Response.redirect(url);
 	}
 }

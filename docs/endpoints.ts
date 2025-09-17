@@ -33,6 +33,20 @@ export const ENDPOINTS = {
 							description: 'The error message'
 						}
 					}
+				},
+				{
+					code: 200,
+					description: 'If you get this, well done. It\' a 0.5% chance designed to briefly mess up bots when they just send requests to random endpoints.',
+					model: {
+						message: {
+							type: 'string',
+							description: 'a custom message'
+						},
+						source_code: {
+							type: 'string',
+							description: 'Link to the source code of this API as they so desperately want to know the behind the scenes.'
+						}
+					}
 				}
 			]
 		}
@@ -111,141 +125,89 @@ export const ENDPOINTS = {
 		},
 		{
 			method: 'GET',
-			path: '/users/{username}/id',
-			description: 'Get user ID from username',
-			deprecated: {
-				version: '0.3.3',
-				use: '/users/{user}'
-			},
+			path: '/users/{user}/avatar_{type}.{format}?size={size}&{circular}&{direct}',
+			description: 'Gets a user avatar with the provided data',
 			parameters: [
 				{
-					name: 'username',
-					type: 'string',
+					name: 'user',
+					type: 'string | number',
 					required: true,
-					description: 'The username of the user to get the ID for'
+					description: 'The username or userid of the user.',
+					notes: [
+						'Username option requires hitting another endpoint and will take a bit longer'
+					],
+				},
+				{
+					name: 'type',
+					type: 'full | bust | headshot',
+					required: false,
+					description: 'What type of avatar to generate.',
+					notes: [
+						'Defaults to \'full\' if not defined.',
+						'`3d` is not an option as that is slightly more complex than the rest.',
+					]
+				},
+				{
+					name: 'format',
+					type: 'png | webp | jpeg',
+					required: true,
+					description: 'The format the resulting image should be returned as.',
+					notes: [
+						'`.jpeg` seems to take longer for roblox to process. Avoid using if possible.'
+					]
+				},
+				{
+					name: 'size',
+					type: '48 | 50 | 60 | 75 | 100 | 110 | 150 | 180 | 352 | 420 | 720',
+					required: true,
+					description: 'The size of the image in pixels (px).',
+					notes: [
+						'The image will always be a square hence only one number.',
+					]
+				},
+				{
+					name: 'circular',
+					type: 'circular (this parameter just has to exist)',
+					required: false,
+					description: 'Should a circular border be appended to the image.'
+				},
+				{
+					name: 'direct',
+					type: 'direct (this parameter just has to exist)',
+					required: false,
+					description: 'Return the file directly instead of an API response. This allows for usage in `<img>` tags for example.'
 				}
 			],
 			responses: [
 				{
-					code: 404,
-					description: 'User could not be found or no username was provided.',
-					model: {
-						error: {
-							type: 'string',
-							description: 'The error message'
-						}
-					}
-				},
-				{
-					code: 400,
-					description: 'Fetch failed. Roblox is either ratelimiting us or is currently down.',
-					model: {
-						error: {
-							type: 'string',
-							description: 'The error message'
-						},
-						error_details: {
-							type: 'any[]',
-							description: 'More information about the error in question.'
-						}
-					}
-				},
-				{
-					code: 500,
-					description: 'Json retrieved from roblox failed to parse. This could be a server side issue not handing an edge case, or a roblox issue in how their data is returned.',
-					model: {
-						error: {
-							type: 'string',
-							description: 'The error message'
-						},
-						error_details: {
-							type: 'any[]',
-							description: 'More information about the error in question.'
-						}
-					}
-				},
-				{
 					code: 200,
-					description: 'The user was found successfully',
+					description: 'Image generation is a success. Note: This also includes "blocked" images, aka banned users, etc',
 					model: {
-						id: {
+						user_id: {
 							type: 'number',
-							description: 'The Roblox user ID'
-						}
-					}
-				}
-			]
-		},
-		{
-			method: 'GET',
-			deprecated: {
-				version: '0.3.3',
-				use: '/users/{user}'
-			},
-			path: '/users/{userid}/name',
-			description: 'Get user name from user ID',
-			parameters: [
-				{
-					name: 'userid',
-					type: 'number',
-					required: true,
-					description: 'The Roblox user ID to get the data for'
-				}
-			],
-			responses: [
-				{
-					code: 404,
-					description: 'User could not be found or no id was provided.',
-					model: {
-						error: {
+							description: 'The id of the user generated'
+						},
+						image_url: {
 							type: 'string',
-							description: 'The error message'
-						}
+							description: 'A link to the image generated'
+						},
 					}
 				},
 				{
 					code: 400,
-					description: 'Fetch failed. Roblox is either ratelimiting us or is currently down.',
+					description: 'Image generation did not succeed (Failed / In Progress / Unavalible)',
 					model: {
+						user_id: {
+							type: 'number',
+							description: 'The id of the user generated'
+						},
 						error: {
 							type: 'string',
-							description: 'The error message'
+							description: 'The reason the image failed to generate.'
 						},
-						error_details: {
-							type: 'any[]',
-							description: 'More information about the error in question.'
-						}
-					}
-				},
-				{
-					code: 500,
-					description: 'Json retrieved from roblox failed to parse. This could be a server side issue not handing an edge case, or a roblox issue in how their data is returned.',
-					model: {
-						error: {
+						field: {
 							type: 'string',
-							description: 'The error message'
-						},
-						error_details: {
-							type: 'any[]',
-							description: 'More information about the error in question.'
-						}
-					}
-				},
-				{
-					code: 200,
-					description: 'The user was found successfully',
-					model: {
-						name: {
-							type: 'string',
-							description: 'The Roblox user username'
-						},
-						display: {
-							type: 'string',
-							description: 'The Roblox user display name'
-						},
-						ui: {
-							type: 'string',
-							description: 'A format of the display name and username to use in ui. Defaults to just display name if no difference.'
+							description: 'Which field caused the error (if a field even did)'
 						}
 					}
 				}
@@ -310,7 +272,7 @@ export const ENDPOINTS = {
 						},
 						date: {
 							type: 'number',
-							description: 'The default unix time of 0 as the user doesn\' have the badge'
+							description: 'The default unix time of 0 as the user doesn\'t have the badge'
 						}
 					}
 				},

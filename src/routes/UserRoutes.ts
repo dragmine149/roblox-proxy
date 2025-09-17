@@ -1,30 +1,28 @@
 import { DataResponse } from '../utils';
-import { fromId, fromName } from '../apis/users';
+import { fromId, fromName, getAvatar, idFromName } from '../apis/users';
 
 export class UserRoutes {
-	static async handle(response: BindingsResponse) {
-		const { user_id, username, option, error } = response;
+	static async handle(response: UserRouteResponse, query: URLSearchParams) {
+		let { user_id, username, option } = response;
 
-		if (Object.keys(error).length > 0) {
-			return DataResponse.URLParseFailed(error);
+		if (option.startsWith('avatar')) {
+			let split = option.split(".");
+			let format = split[1];
+			let type = split[0].split("_")[1];
+
+			if (username && !user_id) user_id = await idFromName(username);
+			console.log(`Getting user avatar for ${user_id}`);
+			return getAvatar(user_id as number, type || "full", query.get('size'), format.toLowerCase(), query.has('circular'), query.has('direct'));
 		}
 
 		switch (option) {
-			case 'name':
-				console.log(`Getting user name from ${user_id}`);
-				return fromId(user_id);
-
-			case 'id':
-				console.log(`Getting user id from ${username}`);
-				return fromName(username);
-
 			case '':
 			default:
 				if (user_id) {
 					return fromId(user_id)
 				}
 				if (username) {
-					return fromName(username)
+					return fromName(username as string)
 				}
 				return DataResponse.APIDoesntExist();
 		}

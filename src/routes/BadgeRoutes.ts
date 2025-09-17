@@ -2,7 +2,7 @@ import { DataResponse, tryCatch } from '../utils';
 import { getBadgeData, getAllBadgeData, compareBadges, getBadgeIcon } from '../apis/badges';
 
 export class BadgeRoutes {
-	static async handle(response: BindingsResponse, request: Request) {
+	static async handle(response: BadgeRouteResponse, request: Request) {
 		const { user_id, option, badge_1, badge_2, badge_id } = response;
 
 		console.log(`Getting badge data for ${user_id}`, { option, badge_1, badge_2 });
@@ -11,6 +11,9 @@ export class BadgeRoutes {
 			case 'icon':
 				return getBadgeIcon(badge_id);
 			case 'earliest':
+				if (!badge_1) return DataResponse.URLParseFailed('Badge_1 is not provided.');
+				if (!badge_2) return DataResponse.URLParseFailed('Badge_2 is not provided.');
+
 				return compareBadges(user_id, badge_1, badge_2);
 			case 'all':
 				let jsonBadges = await tryCatch<{ badgeids: number[] }>(request.json());
@@ -24,7 +27,7 @@ export class BadgeRoutes {
 
 				return getAllBadgeData(user_id, badges.badgeids);
 			case 'badge':
-				return getBadgeData(user_id, badge_1);
+				return getBadgeData(user_id, badge_id);
 			default:
 				return DataResponse.APIDoesntExist();
 		}

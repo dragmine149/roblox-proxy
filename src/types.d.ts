@@ -134,19 +134,55 @@ type Endpoint = {
 type BindingDefinition = {
 	type: string;
 	position: number;
-	required: boolean;
 }
 
 type Bindings = Record<string, BindingDefinition>;
 
 type BindingsResponse = {
 	error: Record<string, string>;
-	[key: string]: any;
+	[key: string]: string | number;
 }
 
+type UserRouteResponse = {
+	user_id?: number;
+	username?: string;
+	option: string;
+}
+
+type BadgeRouteResponse = {
+	user_id: number;
+	badge_id: number;
+	option: string;
+	badge_1?: number;
+	badge_2?: number;
+}
 
 type ResponseType = {
 	error?: string | null;
 	error_details?: any[] | null;
 	[key: string]: any;
+}
+
+type ThumbnailResponse = {
+	data?: ThumbnailResponsePoint[];
+	errors?: ErrorTemplate[];
+}
+type ThumbnailResponsePoint = ThumbnailResponseSuccess | ThumbnailResponseError;
+
+type ThumbnailResponseSuccess = {
+	targetId: number,
+	state: string,
+	imageUrl: string,
+	version: string,
+}
+
+type ThumbnailResponseError = {
+	code: number,
+	message: string,
+	field: string,
+}
+
+type ErrorTemplate = {
+	code: number,
+	message: string,
 }

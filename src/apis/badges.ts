@@ -95,7 +95,7 @@ export async function getAllBadgeData(user_id: number, badges: number[]) {
 				continue;
 			}
 
-			let data = await tryCatch<RobloxBadgeResponse>(response.data.json());
+			let data = await tryCatch<BadgeResponseResponse>(response.data.json());
 
 			if (data.error) {
 				i = await on_error(i, data.error);

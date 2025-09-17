@@ -147,5 +147,26 @@ export const UPDATES = {
 		fixed: [],
 		removed: [],
 		date: new Date(1749310622000)
-	}
+	},
+	v0_4_0: {
+		description: 'New endpoints, removale of deprecated endpoints, and some cleanup',
+		breakingChanges: [
+			'ENDPOINT: `/users/{username}/id` has now been removed as per deprecation notice in v0.3.3. Use `/users/{user}` instead.',
+			'ENDPOINT: `/users/{userid}/name` has now been removed as per deprecation notice in v0.3.3. Use `/users/{user}` instead.',
+		],
+		added: [
+			'ENDPOINT: `/users/{user}/avatar_{type}.{format}?size={size}&{circular}&{direct}` to get roblox avatars. Please read the documentation for more information.',
+			'API: 0.05% chance to get a hidden message when attempting to hit an endpoint that doesn\'t exist.'
+		],
+		changed: [
+			'API: Couple parts of the backend have more checks and will error more often. If data is not provided.',
+		],
+		fixed: [],
+		removed: [
+			'ENDPOINT: `/users/{username}/id`',
+			'ENDPOINT: `/users/{userid}/name`',
+			'API: Warning messages visible in pre v0.3.0 if you missed out a required argument as they were never in use post v0.3.0'
+		],
+		date: new Date(1758119393000)
+	},
 }
