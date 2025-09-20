@@ -179,5 +179,17 @@ export const UPDATES = {
 		],
 		removed: [],
 		date: new Date(1758121272000)
+	},
+	v0_4_2: {
+		description: 'Bug Fixes. Sorry to those who were affected by this.',
+		breakingChanges: [],
+		added: [],
+		changed: [],
+		fixed: [
+			'ENDPOINT: Issue where `/users/{user}` would error. (This happened due to forgetting a check)',
+			'ENDPOINT: `/users/{user}/avatar_{format}.{type}` would unintentionally error when providing an invalid user. The error is intentional, the reason was not.'
+		],
+		removed: [],
+		date: new Date(1758380616000)
 	}
 }

@@ -5,7 +5,7 @@ export class UserRoutes {
 	static async handle(response: UserRouteResponse, query: URLSearchParams) {
 		let { user_id, username, option } = response;
 
-		if (option.startsWith('avatar')) {
+		if (option && option.startsWith('avatar')) {
 			let split = option.split(".");
 			let format = split[1];
 			let type = split[0].split("_")[1];

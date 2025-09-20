@@ -24,6 +24,7 @@ export async function idFromName(name: string): Promise<number> {
 	let data = await tryCatch<RobloxUserIDResponse>(response.data.json());
 	if (data.error) return -1;
 
+	if (data.data.data.length <= 0) return -1;
 	return data.data.data[0].id;
 }
 
@@ -159,7 +160,10 @@ export async function getAvatar(id: number, type: string, size: string | null, f
 		}
 
 		// we can confirm it's the first one as thats the only user we're allowed to send
-		user = (data.data.data as ThumbnailResponsePoint[])[0];
+		let user_list = (data.data.data as ThumbnailResponsePoint[]);
+		if (user_list.length <= 0) return DataResponse.ThumbnailFailed(id, `The provided user id is invalid. No data was returned from the server.`);
+
+		user = user_list[0];
 		console.log(`User data is: ${JSON.stringify(user)}`);
 
 		if ((user as ThumbnailResponseError).code) {
